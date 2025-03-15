@@ -24,7 +24,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--no-sandbox")  # Required for some environments
 chrome_options.add_argument("--disable-dev-shm-usage")  # Prevents crashes in Docker/Linux
-chrome_options.add_argument("--window-size=1920x1080")  # Optional, set window size
+chrome_options.add_argument("--window-size=920x700")  # Optional, set window size
 prefs = {
     "safebrowsing.enabled": True
 }
@@ -40,7 +40,7 @@ try:
     time.sleep(10)
     # Wait for the element to be visible (up to 10 seconds)
     element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "basic-table__content-1toJPX cnn-pcl-t6ze6u"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, element_css))
     )
 
     # Extract the entire div content (including child elements)
