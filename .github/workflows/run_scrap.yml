@@ -37,8 +37,10 @@ jobs:
       run: |
         git config --global user.name "brettnguyen"
         git config --global user.email "komoru8@gmail.com"
-        git add .
-        git commit -m "update"
+        git add downloads/scraped_data.csv
+        git status  # Check if the file is detected
+        git commit -m "update scraped data" || echo "No changes to commit"
         git push
+
 
 
