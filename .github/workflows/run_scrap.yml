@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install selenium
-        pip install webdriver_manager
+        pip install webdriver-manager
         pip install pandas
         pip install requests
         pip install msal

@@ -24,7 +24,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--no-sandbox")  # Required for some environments
 chrome_options.add_argument("--disable-dev-shm-usage")  # Prevents crashes in Docker/Linux
-chrome_options.add_argument("--window-size=920x700")  # Optional, set window size
+chrome_options.add_argument("--window-size=1920x1080")  # Optional, set window size
 prefs = {
     "safebrowsing.enabled": True
 }
