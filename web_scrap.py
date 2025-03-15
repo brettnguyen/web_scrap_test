@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -11,6 +12,13 @@ url = "https://www.cnn.com/markets/premarkets"
 
 # Fix the class selector (multiple classes must be separated by dots)
 element_css = ".basic-table__content-1toJPX.cnn-pcl-t6ze6u"
+
+# Define the download folder
+download_folder = "downloads"
+
+# Ensure the downloads directory exists
+if not os.path.exists(download_folder):
+    os.makedirs(download_folder)
 
 # Set up Selenium WebDriver with Headless Mode using WebDriverManager
 chrome_options = webdriver.ChromeOptions()
@@ -36,10 +44,12 @@ try:
     text = element.get_attribute("innerText")  # Use innerText to get formatted text
     print(f"Extracted Text:\n{text}")
 
-    # Save the extracted text into a CSV file
+    # Save the extracted text into a CSV file inside "downloads" folder
+    csv_file_path = os.path.join(download_folder, "scraped_data.csv")
     df = pd.DataFrame([{"Extracted Text": text}])
-    df.to_csv("scraped_data.csv", index=False)
-    print("Scraping complete! Data saved to 'scraped_data.csv'.")
+    df.to_csv(csv_file_path, index=False)
+
+    print(f"Scraping complete! Data saved to '{csv_file_path}'.")
 
 except Exception as e:
     print(f"Error: {str(e)}")
