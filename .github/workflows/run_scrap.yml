@@ -1,45 +1,44 @@
-name: Run Web Scraper Every 5 Minutes
+name: Daily Selenium Run
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Runs every 5 minutes
+    - cron: '0 14 * * 1-5'  # Run at 2 PM UTC (9 AM EST) on weekdays (Monday-Friday)
   workflow_dispatch:  # Allows manual trigger
 
+permissions:
+  contents: write  # Required to push changes back to the repo
+
 jobs:
-  scrape:
+  run-selenium:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'  # Use latest Python 3 version
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' 
 
-      - name: Install Dependencies
-        run: |
-          pip install selenium
-          pip install webdriver_manager
-          pip install pandas
-          pip install requests
-          pip install msal
-          pip install pyyaml
+    - name: Install dependencies
+      run: |
+        pip install selenium
+        pip install webdriver_manager
+        pip install pandas
+        pip install requests
+        pip install msal
+        pip install pyyaml
 
-      - name: Run Web Scraper in Headless Mode
-        run: python web_scrap.py
+    - name: Run Web Scraper
+      run: python web_scrap.py
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add .
+        git commit -m "update"
+        git push
 
-      - name: Commit and Push Changes
-        env:
-          PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git add scraped_data.csv
-          git commit -m "Auto-update scraped_data.csv [skip ci]" || echo "No changes to commit"
-          git push https://x-access-token:${PAT}@github.com/${{ github.repository }}.git main
 
