@@ -1,44 +1,44 @@
-name: Daily Selenium Run
+name: Run Web Scraper
 
 on:
   schedule:
-    - cron: '0 14 * * 1-5'  # Run at 2 PM UTC (9 AM EST) on weekdays (Monday-Friday)
+    - cron: '0 14 * * 1-5'  # Runs at 2 PM UTC (9 AM EST) on weekdays
   workflow_dispatch:  # Allows manual trigger
 
 permissions:
-  contents: write  # Required to push changes back to the repo
+  contents: write  # Required to push updates
 
 jobs:
-  run-selenium:
+  run-web-scraper:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10' 
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
         pip install selenium
         pip install webdriver_manager
         pip install pandas
-        pip install requests
-        pip install msal
-        pip install pyyaml
+
+    - name: Install Google Chrome
+      run: |
+        sudo apt update
+        sudo apt install -y google-chrome-stable
+        sudo apt install -y chromedriver
+        sudo chmod +x /usr/bin/chromedriver  # Ensure executable permissions
 
     - name: Run Web Scraper
       run: python web_scrap.py
 
     - name: Commit and Push Changes
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
         git add .
-        git commit -m "update"
+        git commit -m "test"
         git push
-
-
