@@ -1,6 +1,6 @@
 import os
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,8 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
 
-# Set the website URL
-url = "https://www.cnn.com/markets/premarkets"
 
 # Fix the class selector (multiple classes must be separated by dots)
 element_css = ".basic-table__content-1toJPX.cnn-pcl-t6ze6u"
@@ -27,17 +25,22 @@ chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--no-sandbox")  # Required for some environments
 chrome_options.add_argument("--disable-dev-shm-usage")  # Prevents crashes in Docker/Linux
 chrome_options.add_argument("--window-size=1920x1080")  # Optional, set window size
+prefs = {
+    "safebrowsing.enabled": True
+}
+
+chrome_options.add_experimental_option("prefs", prefs)
 
 # Use WebDriverManager to handle ChromeDriver
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
 try:
     # Open the website
-    driver.get(url)
+    driver.get("https://www.cnn.com/markets/premarkets")
     time.sleep(10)
     # Wait for the element to be visible (up to 10 seconds)
     element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, element_css))
+        EC.presence_of_element_located((By.CSS_SELECTOR, "div.basic-table__content-1toJPX.cnn-pcl-t6ze6u"))
     )
 
     # Extract the entire div content (including child elements)
