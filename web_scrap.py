@@ -1,4 +1,6 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,7 +12,7 @@ url = "https://www.cnn.com/markets/premarkets"
 # Fix the class selector (multiple classes must be separated by dots)
 element_css = ".basic-table__content-1toJPX.cnn-pcl-t6ze6u"
 
-# Set up Selenium WebDriver with Headless Mode
+# Set up Selenium WebDriver with Headless Mode using WebDriverManager
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--no-sandbox")  # Required for some environments
@@ -18,7 +20,8 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Prevents crashes in Do
 chrome_options.add_argument("--disable-gpu")  # Optional, for stability
 chrome_options.add_argument("--window-size=1920x1080")  # Optional, set window size
 
-driver = webdriver.Chrome(options=chrome_options)
+# Use WebDriverManager to handle ChromeDriver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 try:
     # Open the website

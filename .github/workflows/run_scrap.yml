@@ -16,14 +16,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  
+          python-version: '3.x'  # Use latest Python 3 version
 
       - name: Install Dependencies
         run: |
-          pip install selenium pandas
-          sudo apt update
-          sudo apt install -y google-chrome-stable
-          sudo apt install -y chromedriver
+          pip install selenium
+          pip install webdriver_manager
+          pip install pandas
+          pip install requests
+          pip install msal
+          pip install pyyaml
 
       - name: Run Web Scraper in Headless Mode
         run: python web_scrap.py
@@ -34,7 +36,10 @@ jobs:
           git config --global user.email "actions@github.com"
 
       - name: Commit and Push Changes
+        env:
+          PAT: ${{ secrets.GH_PAT }}
         run: |
           git add scraped_data.csv
           git commit -m "Auto-update scraped_data.csv [skip ci]" || echo "No changes to commit"
-          git push origin main
+          git push https://x-access-token:${PAT}@github.com/${{ github.repository }}.git main
+
