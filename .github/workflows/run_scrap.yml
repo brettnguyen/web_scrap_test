@@ -30,7 +30,7 @@ jobs:
         pip install msal
         pip install pyyaml
 
-    - name: Run Web Scraper
+    - name: Run web_scrap.py
       run: python web_scrap.py
 
     - name: Commit and Push Changes
