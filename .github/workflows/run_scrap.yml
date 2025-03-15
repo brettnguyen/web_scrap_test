@@ -35,8 +35,8 @@ jobs:
 
     - name: Commit and Push Changes
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.name "brettnguyen"
+        git config --global user.email "komoru8@gmail.com"
         git add .
         git commit -m "update"
         git push
