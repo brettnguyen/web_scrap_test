@@ -40,7 +40,7 @@ try:
     time.sleep(10)
     # Wait for the element to be visible (up to 10 seconds)
     element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "div.basic-table__content-1toJPX.cnn-pcl-t6ze6u"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, "basic-table__content-1toJPX cnn-pcl-t6ze6u"))
     )
 
     # Extract the entire div content (including child elements)
