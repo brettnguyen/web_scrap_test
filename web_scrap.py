@@ -5,13 +5,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 import pandas as pd
 
 # Set the website URL
 url = "https://www.cnn.com/markets/premarkets"
 
 # Fix the class selector (multiple classes must be separated by dots)
-element_css = " basic-table__content-1toJPX cnn-pcl-t6ze6u"
+element_css = ".basic-table__content-1toJPX.cnn-pcl-t6ze6u"
 
 # Define the download folder
 download_folder = "downloads"
@@ -34,7 +35,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 try:
     # Open the website
     driver.get(url)
-
+    time.sleep(10)
     # Wait for the element to be visible (up to 10 seconds)
     element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, element_css))
