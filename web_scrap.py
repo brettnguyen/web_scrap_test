@@ -12,7 +12,7 @@ import pandas as pd
 url = "https://www.cnn.com/markets/premarkets"
 
 # Fix the class selector (multiple classes must be separated by dots)
-element_css = "basic-table__content-1toJPX.cnn-pcl-t6ze6u"
+element_css = ".basic-table__content-1toJPX.cnn-pcl-t6ze6u"
 
 # Define the download folder
 download_folder = "downloads"
@@ -26,7 +26,6 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--no-sandbox")  # Required for some environments
 chrome_options.add_argument("--disable-dev-shm-usage")  # Prevents crashes in Docker/Linux
-chrome_options.add_argument("--disable-gpu")  # Optional, for stability
 chrome_options.add_argument("--window-size=1920x1080")  # Optional, set window size
 
 # Use WebDriverManager to handle ChromeDriver
